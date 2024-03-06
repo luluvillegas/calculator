@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Source Code Pro", monospace;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid black;
+  width: 30%;
+  height: 60%;
+  padding: 30px;
+}
+
+.display {
+  min-height: 25%;
+  border: 1px solid black;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 60px;
+}
+
+.pad {
+  display: flex;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 75%;
+}
+
+.right-column {
+  min-width: 25%;
+}
+
+.action {
+  display: flex;
+  min-width: 75%;
+}
+
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.operators {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  flex: 1 0 33%;
+  min-height: 50px;
+  font-size: 20px;
+}
+
+.footer {
+}
