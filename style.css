@@ -63,7 +63,7 @@ body {
   flex-wrap: wrap;
 }
 
-.operators {
+.operatorsPad {
   display: flex;
   flex-direction: column;
 }

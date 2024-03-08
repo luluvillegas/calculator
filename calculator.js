@@ -15,44 +15,76 @@ function divide(a, b) {
 }
 
 function operate(fNumber, sNumber, op) {
+  fNumber = Number(fNumber);
+  sNumber = Number(sNumber);
   switch (op) {
     case `+`:
-      add(fNumber, sNumber);
-      break;
+      return add(fNumber, sNumber);
     case `-`:
-      substract(fNumber, sNumber);
-      break;
+      return substract(fNumber, sNumber);
     case `*`:
-      multiply(fNumber, sNumber);
-      break;
+      return multiply(fNumber, sNumber);
     case `/`:
-      divide(fNumber, sNumber);
-      break;
+      return divide(fNumber, sNumber);
   }
 }
 
-function populateDisplay(str) {
-  let number = (display.textContent += str);
-  //console.log(number);
+function populateDisplay(num) {
+  number = display.textContent += num;
+}
+
+function clearDisplay() {
+  display.innerHTML = ``;
+}
+
+function resetVariables() {
+  firstNumber = 0;
+  secondNumber = 0;
+  number = 0;
 }
 
 let firstNumber;
 let secondNumber;
 let operator;
-//let first = false;
-//let second = false;
+let number;
+let operatorPressed = false;
 const display = document.querySelector(`.display`);
 
 const numbersPad = Array.from(document.querySelectorAll(`.numbers > button`));
-//console.log(numbers);
 for (let i = 0; i <= numbersPad.length - 1; i++) {
   numbersPad[i].addEventListener(`click`, (e) => {
-    //console.log(e.target.textContent);
+    if (operatorPressed) {
+      clearDisplay();
+      operatorPressed = false;
+    }
     populateDisplay(e.target.textContent);
+  });
+}
+
+const operators = Array.from(document.querySelectorAll(`.operator`));
+for (let j = 0; j <= operators.length - 1; j++) {
+  operators[j].addEventListener(`click`, (e) => {
+    operatorPressed = true;
+    firstNumber = number;
+    operator = e.target.textContent;
   });
 }
 
 const cleanBtn = document.querySelector(`.clean`);
 cleanBtn.addEventListener(`click`, () => {
-  display.innerHTML = ``;
+  clearDisplay();
+});
+
+const equalBtn = document.querySelector(`.equal`);
+equalBtn.addEventListener(`click`, () => {
+  operatorPressed = true;
+  clearDisplay();
+  secondNumber = number;
+  let result = operate(firstNumber, secondNumber, operator);
+  if (isNaN(result)) {
+    populateDisplay(`Error`);
+  } else {
+    populateDisplay(result);
+    resetVariables(firstNumber, secondNumber, result, number);
+  }
 });
