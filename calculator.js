@@ -37,54 +37,80 @@ function clearDisplay() {
   display.innerHTML = ``;
 }
 
-function resetVariables() {
-  firstNumber = 0;
-  secondNumber = 0;
-  number = 0;
-}
-
-let firstNumber;
-let secondNumber;
-let operator;
-let number;
-let operatorPressed = false;
-const display = document.querySelector(`.display`);
-
-const numbersPad = Array.from(document.querySelectorAll(`.numbers > button`));
-for (let i = 0; i <= numbersPad.length - 1; i++) {
-  numbersPad[i].addEventListener(`click`, (e) => {
-    if (operatorPressed) {
-      clearDisplay();
-      operatorPressed = false;
-    }
-    populateDisplay(e.target.textContent);
-  });
-}
-
-const operators = Array.from(document.querySelectorAll(`.operator`));
-for (let j = 0; j <= operators.length - 1; j++) {
-  operators[j].addEventListener(`click`, (e) => {
+function setOperation(op) {
+  if (firstNumber === ``) {
+    firstNumber = display.textContent;
+    currentOperator = op;
     operatorPressed = true;
-    firstNumber = number;
-    operator = e.target.textContent;
-  });
+    cleanScreen = true;
+  } else {
+    evaluateOperation();
+    currentOperator = operator;
+    firstNumber = display.textContent;
+    operatorPressed = false;
+  }
 }
 
+function evaluateOperation() {
+  if (firstNumber === ``) {
+    return;
+  }
+  secondNumber = display.textContent;
+  if (currentOperator === `/` && secondNumber === `0`) {
+    clearDisplay();
+    resetVariables();
+    alert(`You can't divide by 0`);
+    return;
+  }
+  clearDisplay();
+  populateDisplay(operate(firstNumber, secondNumber, currentOperator));
+  cleanScreen = true;
+}
+
+function resetVariables() {
+  firstNumber = ``;
+  secondNumber = ``;
+  operator = ``;
+  currentOperator = ``;
+  operatorPressed = false;
+}
+
+let firstNumber = ``;
+let secondNumber = ``;
+let operator = ``;
+let operatorPressed = false;
+let cleanScreen = false;
+const display = document.querySelector(`.display`);
+const numbersButtons = document.querySelectorAll(`.numbers > button`);
+const operatorsButtons = document.querySelectorAll(`.operator`);
 const cleanBtn = document.querySelector(`.clean`);
+const equalBtn = document.querySelector(`.equal`);
+
+numbersButtons.forEach((button) =>
+  button.addEventListener(`click`, () => {
+    if (cleanScreen) {
+      clearDisplay();
+      cleanScreen = false;
+    }
+    populateDisplay(button.textContent);
+  })
+);
+
+operatorsButtons.forEach((button) =>
+  button.addEventListener(`click`, () => {
+    operatorPressed = true;
+    operator = button.textContent;
+    setOperation(operator);
+  })
+);
+
 cleanBtn.addEventListener(`click`, () => {
   clearDisplay();
+  resetVariables();
 });
 
-const equalBtn = document.querySelector(`.equal`);
 equalBtn.addEventListener(`click`, () => {
-  operatorPressed = true;
-  clearDisplay();
-  secondNumber = number;
-  let result = operate(firstNumber, secondNumber, operator);
-  if (isNaN(result)) {
-    populateDisplay(`Error`);
-  } else {
-    populateDisplay(result);
-    resetVariables(firstNumber, secondNumber, result, number);
-  }
+  operatorPressed = false;
+  evaluateOperation();
+  resetVariables();
 });
