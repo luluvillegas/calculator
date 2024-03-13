@@ -39,6 +39,13 @@ body {
   font-size: 60px;
 }
 
+.display p {
+  text-align: end;
+  max-width: 9ch;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
 .pad {
   display: flex;
 }

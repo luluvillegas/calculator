@@ -30,11 +30,20 @@ function operate(fNumber, sNumber, op) {
 }
 
 function populateDisplay(num) {
-  number = display.textContent += num;
+  let number = (display.textContent += num);
+  if (number.length > maxDisplayLength) {
+    alert(`It is a 9 digit calculator. Your number might have been truncated`);
+    number = number.substring(0, 9);
+    display.textContent = number;
+  }
 }
 
 function clearDisplay() {
   display.innerHTML = ``;
+}
+
+function roundNumber(n) {
+  return Math.round(n * 100000) / 100000;
 }
 
 function setOperation(op) {
@@ -63,7 +72,8 @@ function evaluateOperation() {
     return;
   }
   clearDisplay();
-  populateDisplay(operate(firstNumber, secondNumber, currentOperator));
+  let result = operate(firstNumber, secondNumber, currentOperator);
+  populateDisplay(roundNumber(result));
   cleanScreen = true;
 }
 
@@ -80,6 +90,7 @@ let secondNumber = ``;
 let operator = ``;
 let operatorPressed = false;
 let cleanScreen = false;
+const maxDisplayLength = 9;
 const display = document.querySelector(`.display > p`);
 const numbersButtons = document.querySelectorAll(`.numbers > button`);
 const operatorsButtons = document.querySelectorAll(`.operator`);
