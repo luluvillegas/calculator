@@ -33,7 +33,7 @@ function populateDisplay(num) {
   let number = (display.textContent += num);
   if (number.length > maxDisplayLength) {
     alert(`It is a 9 digit calculator. Your number might have been truncated`);
-    number = number.substring(0, 9);
+    number = number.substring(0, 9); //change to const max display length
     display.textContent = number;
   }
 }
@@ -83,6 +83,7 @@ function resetVariables() {
   operator = ``;
   currentOperator = ``;
   operatorPressed = false;
+  pointBtn.disabled = false;
 }
 
 let firstNumber = ``;
@@ -95,6 +96,7 @@ const display = document.querySelector(`.display > p`);
 const numbersButtons = document.querySelectorAll(`.numbers > button`);
 const operatorsButtons = document.querySelectorAll(`.operator`);
 const cleanBtn = document.querySelector(`.clean`);
+const backspaceBtn = document.querySelector(`.backspace`);
 const equalBtn = document.querySelector(`.equal`);
 const pointBtn = document.querySelector(`.point`);
 
@@ -123,12 +125,17 @@ operatorsButtons.forEach((button) =>
 cleanBtn.addEventListener(`click`, () => {
   clearDisplay();
   resetVariables();
-  pointBtn.disabled = false;
+});
+
+backspaceBtn.addEventListener(`click`, () => {
+  display.textContent = display.textContent.substring(
+    0,
+    display.textContent.length - 1
+  );
 });
 
 equalBtn.addEventListener(`click`, () => {
   operatorPressed = false;
   evaluateOperation();
   resetVariables();
-  pointBtn.disabled = false;
 });
