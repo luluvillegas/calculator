@@ -96,12 +96,16 @@ const numbersButtons = document.querySelectorAll(`.numbers > button`);
 const operatorsButtons = document.querySelectorAll(`.operator`);
 const cleanBtn = document.querySelector(`.clean`);
 const equalBtn = document.querySelector(`.equal`);
+const pointBtn = document.querySelector(`.point`);
 
 numbersButtons.forEach((button) =>
   button.addEventListener(`click`, () => {
     if (cleanScreen) {
       clearDisplay();
       cleanScreen = false;
+    }
+    if (button.classList.contains(`point`)) {
+      pointBtn.disabled = true;
     }
     populateDisplay(button.textContent);
   })
@@ -110,6 +114,7 @@ numbersButtons.forEach((button) =>
 operatorsButtons.forEach((button) =>
   button.addEventListener(`click`, () => {
     operatorPressed = true;
+    pointBtn.disabled = false;
     operator = button.textContent;
     setOperation(operator);
   })
@@ -118,10 +123,12 @@ operatorsButtons.forEach((button) =>
 cleanBtn.addEventListener(`click`, () => {
   clearDisplay();
   resetVariables();
+  pointBtn.disabled = false;
 });
 
 equalBtn.addEventListener(`click`, () => {
   operatorPressed = false;
   evaluateOperation();
   resetVariables();
+  pointBtn.disabled = false;
 });
