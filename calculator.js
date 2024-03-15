@@ -46,6 +46,12 @@ function roundNumber(n) {
   return Math.round(n * 100000) / 100000;
 }
 
+function removePressedOperator() {
+  operatorsButtons.forEach((button) => {
+    button.removeAttribute(`style`);
+  });
+}
+
 function setOperation(op) {
   if (firstNumber === ``) {
     firstNumber = display.textContent;
@@ -56,7 +62,7 @@ function setOperation(op) {
     evaluateOperation();
     currentOperator = operator;
     firstNumber = display.textContent;
-    operatorPressed = false;
+    //operatorPressed = false;
   }
 }
 
@@ -83,6 +89,7 @@ function resetVariables() {
   operator = ``;
   currentOperator = ``;
   operatorPressed = false;
+  removePressedOperator();
   pointBtn.disabled = false;
 }
 
@@ -115,7 +122,11 @@ numbersButtons.forEach((button) =>
 
 operatorsButtons.forEach((button) =>
   button.addEventListener(`click`, () => {
+    if (operatorPressed) {
+      removePressedOperator();
+    }
     operatorPressed = true;
+    button.style.backgroundColor = `#e0d6ff`;
     pointBtn.disabled = false;
     operator = button.textContent;
     setOperation(operator);
@@ -136,6 +147,7 @@ backspaceBtn.addEventListener(`click`, () => {
 
 equalBtn.addEventListener(`click`, () => {
   operatorPressed = false;
+  removePressedOperator();
   evaluateOperation();
   resetVariables();
 });

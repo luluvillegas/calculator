@@ -83,7 +83,8 @@ body {
   display: flex;
   min-width: 75%;
 }
-.action button {
+.action button,
+.operatorsPad button {
   background-color: #e8f4ea;
   color: #354338;
 }
@@ -96,11 +97,6 @@ body {
 .operatorsPad {
   display: flex;
   flex-direction: column;
-}
-
-.operatorsPad button {
-  background-color: #e8f4ea;
-  color: #354338;
 }
 
 button {
@@ -129,6 +125,15 @@ button:disabled {
   pointer-events: none;
   border: none;
   box-shadow: none;
+}
+
+.numbers button:active,
+.action button:active {
+  background-color: #354338;
+}
+
+.action button:active {
+  color: #e8f4ea;
 }
 
 .footer {
