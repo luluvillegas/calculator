@@ -116,6 +116,19 @@ button {
   color: #e8f4ea;
   box-shadow: 0 2px 8px 0 rgba(53, 67, 56, 0.11),
     0 2px 8px 0 rgba(53, 67, 56, 0.11);
+  transition: transform 300ms ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.02);
+}
+
+button:disabled {
+  background-color: #9db0a1;
+  color: #e8f4ea;
+  pointer-events: none;
+  border: none;
+  box-shadow: none;
 }
 
 .footer {
